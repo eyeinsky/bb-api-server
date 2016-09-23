@@ -9,6 +9,7 @@ angular.module('starter.controllers', [])
       {name: 'P1', suffix: 'p1'}
     , {name: 'Kuku', suffix: 'kuku'}
     , {name: 'Raadio 2', suffix: 'r2'}
+    , {name: 'Vikerraadio', suffix: 'viker'}
     , {name: 'Bandit Rock', suffix: 'brock'}
   ]
 

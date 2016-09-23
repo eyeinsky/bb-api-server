@@ -17,12 +17,14 @@ type Radio struct {
 var p1 = Radio{"p1", []string{"http://http-live.sr.se/p1-mp3-192"}}
 var kuku = Radio{"kuku", []string{"http://striiming.trio.ee:8008/kuku.mp3"}}
 var r2 = Radio{"r2", []string{"-playlist", "http://r2.err.ee/gfx/raadio2128.m3u"}}
+var viker = Radio{"viker", []string{"http://icecast.err.ee:80/vikerraadio.mp3"}}
 var brock = Radio{"brock", []string{"http://fm02-icecast.mtg-r.net/fm02_aac"}}
 
 var radios = map[string]Radio{
 	"p1":    p1,
 	"kuku":  kuku,
 	"r2":    r2,
+	"viker": viker,
 	"brock": brock,
 }
 
