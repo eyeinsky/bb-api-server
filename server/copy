@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+go fmt main.go
+scp main.go bb:~/bb-api-server/main.go
