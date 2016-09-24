@@ -39,14 +39,18 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	makeHandler := func(name *string, radio *Radio) func(w http.ResponseWriter, req *http.Request) {
-		n := *name
-		r := *radio
+	makeHandler := func(namePtr *string, radioPtr *Radio) func(w http.ResponseWriter, req *http.Request) {
+		name := *namePtr
+		radio := *radioPtr
 		return func(w http.ResponseWriter, req *http.Request) {
-			kill()
-			exec.Command("mplayer", r.args...).Start()
-			fmt.Fprintf(w, html.EscapeString(n))
-			current.Store(r.name)
+      if (current.Load().(string) != name) {
+        kill()
+        exec.Command("mplayer", radio.args...).Start()
+        fmt.Fprintf(w, html.EscapeString(name))
+        current.Store(name)
+      } else {
+        fmt.Fprintf(w, html.EscapeString(name))
+      }
 		}
 	}
 
