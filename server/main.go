@@ -39,17 +39,19 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	for _, radio := range radios {
-		fmt.Println("Registering " + radio.name)
-		mux.HandleFunc("/"+radio.name, func(w http.ResponseWriter, req *http.Request) {
-			path := req.URL.Path[1:]
-			fmt.Println("Got " + path)
-			radio := radios[path]
+	makeHandler := func(name *string, radio *Radio) func(w http.ResponseWriter, req *http.Request) {
+		n := *name
+		r := *radio
+		return func(w http.ResponseWriter, req *http.Request) {
 			kill()
-			exec.Command("mplayer", radio.args...).Start()
-			fmt.Fprintf(w, html.EscapeString(path))
-			current.Store(radio.name)
-		})
+			exec.Command("mplayer", r.args...).Start()
+			fmt.Fprintf(w, html.EscapeString(n))
+			current.Store(r.name)
+		}
+	}
+
+	for name, radio := range radios {
+		mux.HandleFunc("/"+name, makeHandler(&name, &radio))
 	}
 
 	mux.HandleFunc("/playing", func(w http.ResponseWriter, r *http.Request) {
